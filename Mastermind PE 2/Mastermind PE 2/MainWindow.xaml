@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/th.jpg"/>
+        </Grid.Background>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10, 10, 20, 200">
             <ComboBox x:Name="Kleurcode1" Width="150" />
             <ComboBox x:Name="Kleurcode2" Width="150" />
@@ -15,25 +18,34 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
-            <Label x:Name="Kleur1" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" />
-            <Label x:Name="Kleur2" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" />
-            <Label x:Name="Kleur3" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" />
-            <Label x:Name="Kleur4" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" />
+            <Label x:Name="Kleur1" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" Background="#FFFAFAFA" />
+            <Label x:Name="Kleur2" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" Background="White" />
+            <Label x:Name="Kleur3" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" Background="White" />
+            <Label x:Name="Kleur4" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" Background="White" />
         </StackPanel>
 
         <Button Content="Check code" HorizontalAlignment="Center" VerticalAlignment="Top" Width="500" Height="100" FontSize="24" FontFamily="Power Green" Click="Button_Click"/>
-        <Label FontSize="15" Content="Total atempts&#xD;&#xA;" Margin="10,0,683,402"/>
+        <Label FontSize="15" Content="Total atempts&#xD;&#xA;" Margin="10,0,683,402" Background="White"/>
         <TextBox x:Name="Total_attemps"  HorizontalAlignment="Left" Height="32" Margin="46,32,0,0" TextWrapping="Wrap" Text="0" FontSize="20" VerticalAlignment="Top" Width="36"/>
         <TextBox x:Name="Debug" HorizontalAlignment="Left" Height="206" Margin="540,0,0,0" TextWrapping="Wrap" Text="Debug" VerticalAlignment="Top" Width="250" Visibility="Hidden"/>
         <TextBox x:Name="Countdown" HorizontalAlignment="Left" Margin="705,32,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="36" Height="38" FontSize="24"/>
-        <Label Content="Time remaining" HorizontalAlignment="Left" Height="31" Margin="661,1,0,0" VerticalAlignment="Top" Width="124" FontSize="16"/>
-        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,337,0,0" Height="97">
-            <Label Content="poging history:" FontWeight="Medium" />
+        <Label Content="Time remaining" HorizontalAlignment="Left" Height="31" Margin="661,1,0,0" VerticalAlignment="Top" Width="124" FontSize="16" Background="White"/>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="-5,284,5,0" Height="97">
+            <Label Content="poging history:" FontWeight="Medium" Background="White" Width="98" />
             <ListBox x:Name="HistoryListBox" Height="70" Width="600" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="bottom" HorizontalAlignment="Left" Margin="100,200,200,100">
-            <Label Content="Score:" FontWeight="Bold" />
-            <Label x:Name="ScoreLabel" Content="0" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="705,0,0,293">
+            <Label Content="Score:" FontWeight="Bold" Background="White" RenderTransformOrigin="0.5,0.5" Width="53" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.98"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+            <Label x:Name="ScoreLabel" Content="0" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" Background="White" />
         </StackPanel>
     </Grid>
 </Window>
