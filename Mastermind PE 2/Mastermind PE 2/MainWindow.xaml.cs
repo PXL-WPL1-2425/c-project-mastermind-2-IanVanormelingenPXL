@@ -18,7 +18,6 @@ namespace MastermindGame
         private int totalAttempts = 0;
         private const int MaxAttempts = 10;
 
-        // Lijst om de historiek van pogingen bij te houden
         private List<string> attemptHistory = new List<string>();
         private int currentScore = 0;
 
@@ -28,6 +27,21 @@ namespace MastermindGame
             GenerateGeheime_code();
             FillComboBoxes();
             SetupTimer();
+        }
+
+        // Overrides the OnClosing method to prompt the user before closing
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            // Prompt the user to confirm if they want to close the application
+            var result = MessageBox.Show("Weet je zeker dat je de applicatie wilt afsluiten?",
+                                         "Bevestigen", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true; // Cancel the closing event, keeping the window open
+            }
         }
 
         private void GenerateGeheime_code()
@@ -216,4 +230,3 @@ namespace MastermindGame
         }
     }
 }
-
