@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10, 10, 20, 200">
             <ComboBox x:Name="Kleurcode1" Width="150" />
             <ComboBox x:Name="Kleurcode2" Width="150" />
             <ComboBox x:Name="Kleurcode3" Width="150" />
             <ComboBox x:Name="Kleurcode4" Width="150" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
             <Label x:Name="Kleur1" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" />
             <Label x:Name="Kleur2" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" />
             <Label x:Name="Kleur3" Width="150" Height="100" BorderThickness="2" BorderBrush="Gray" />
@@ -27,5 +27,9 @@
         <TextBox x:Name="Debug" HorizontalAlignment="Left" Height="206" Margin="540,0,0,0" TextWrapping="Wrap" Text="Debug" VerticalAlignment="Top" Width="250" Visibility="Hidden"/>
         <TextBox x:Name="Countdown" HorizontalAlignment="Left" Margin="705,32,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="36" Height="38" FontSize="24"/>
         <Label Content="Time remaining" HorizontalAlignment="Left" Height="31" Margin="661,1,0,0" VerticalAlignment="Top" Width="124" FontSize="16"/>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,337,0,0" Height="97">
+            <Label Content="poging history:" FontWeight="Medium" />
+            <ListBox x:Name="HistoryListBox" Height="70" Width="600" />
+        </StackPanel>
     </Grid>
 </Window>

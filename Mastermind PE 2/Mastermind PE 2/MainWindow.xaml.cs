@@ -18,10 +18,12 @@ namespace MastermindGame
         private int totalAttempts = 0;
         private const int MaxAttempts = 10;
 
+        // Lijst om de historiek van pogingen bij te houden
+        private List<string> attemptHistory = new List<string>();
 
         public MainWindow()
         {
-            InitializeComponent();
+        
             GenerateGeheime_code();
             FillComboBoxes();
             SetupTimer();
@@ -78,6 +80,8 @@ namespace MastermindGame
             FillComboBoxes();
             remainingTime = 10;
             Counter.Text = remainingTime.ToString();
+            attemptHistory.Clear();
+            UpdateHistoryView();
             timer.Start();
         }
 
@@ -104,7 +108,10 @@ namespace MastermindGame
                 return;
             }
 
-            EvaluateGuess(guess);
+            string feedback = EvaluateGuess(guess);
+            attemptHistory.Add(string.Join(", ", guess) + " - Feedback: " + feedback);
+            UpdateHistoryView();
+
             totalAttempts++;
 
             if (totalAttempts >= MaxAttempts)
@@ -114,9 +121,11 @@ namespace MastermindGame
             }
         }
 
-        private void EvaluateGuess(List<string> guess)
+        private string EvaluateGuess(List<string> guess)
         {
             var feedbackLabels = new List<Label> { Kleur1, Kleur2, Kleur3, Kleur4 };
+            int correctPosition = 0;
+            int correctColor = 0;
 
             for (int i = 0; i < 4; i++)
             {
@@ -128,6 +137,7 @@ namespace MastermindGame
                 if (guess[i] == Geheime_code[i])
                 {
                     feedbackLabels[i].BorderBrush = Brushes.DarkRed;
+                    correctPosition++;
                     Geheime_code[i] = null;
                     guess[i] = null;
                 }
@@ -138,10 +148,20 @@ namespace MastermindGame
                 if (guess[i] != null && Geheime_code.Contains(guess[i]))
                 {
                     feedbackLabels[i].BorderBrush = Brushes.Wheat;
+                    correctColor++;
                     Geheime_code[Geheime_code.IndexOf(guess[i])] = null;
                 }
             }
+
+            return $"{correctPosition} rood, {correctColor} wit";
         }
+
+        private void UpdateHistoryView()
+        {
+            HistoryListBox.ItemsSource = null;
+            HistoryListBox.ItemsSource = attemptHistory;
+        }
+
         private void ToggleDebug(object sender, RoutedEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && Keyboard.IsKeyDown(Key.F12))
