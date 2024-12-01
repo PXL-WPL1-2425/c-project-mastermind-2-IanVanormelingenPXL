@@ -70,7 +70,7 @@ namespace MastermindGame
             {
                 timer.Stop();
                 MessageBox.Show("De tijd is om! Probeer opnieuw.", "Game Over", MessageBoxButton.OK, MessageBoxImage.Warning);
-                ResetGame();
+                EndGame(false);
             }
         }
 
@@ -88,12 +88,30 @@ namespace MastermindGame
             timer.Start();
         }
 
+        private void EndGame(bool codeCracked)
+        {
+            timer.Stop();
+            string message = codeCracked
+                ? "Gefeliciteerd! Je hebt de code gekraakt!"
+                : $"Helaas, je hebt de code niet kunnen kraken. De geheime code was: {string.Join(", ", Geheime_code)}";
+
+            var result = MessageBox.Show(message + "\nWil je opnieuw spelen?", "Spel beëindigd", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                ResetGame();
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (totalAttempts >= MaxAttempts)
             {
-                MessageBox.Show("Je hebt het maximale aantal pogingen bereikt! Het spel wordt opnieuw gestart.", "Game Over", MessageBoxButton.OK, MessageBoxImage.Warning);
-                ResetGame();
+                EndGame(false);
                 return;
             }
 
@@ -120,10 +138,15 @@ namespace MastermindGame
 
             totalAttempts++;
 
+            if (guess.TrueForAll(color => color == null)) // Alle kleuren correct
+            {
+                EndGame(true);
+                return;
+            }
+
             if (totalAttempts >= MaxAttempts)
             {
-                MessageBox.Show($"Je hebt het maximale aantal pogingen bereikt! De geheime code was: {string.Join(", ", Geheime_code)}", "Game Over", MessageBoxButton.OK, MessageBoxImage.Warning);
-                ResetGame();
+                EndGame(false);
             }
         }
 
@@ -193,3 +216,4 @@ namespace MastermindGame
         }
     }
 }
+
