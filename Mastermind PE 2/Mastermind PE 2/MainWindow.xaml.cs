@@ -20,10 +20,11 @@ namespace MastermindGame
 
         // Lijst om de historiek van pogingen bij te houden
         private List<string> attemptHistory = new List<string>();
+        private int currentScore = 0;
 
         public MainWindow()
         {
-        
+            InitializeComponent();
             GenerateGeheime_code();
             FillComboBoxes();
             SetupTimer();
@@ -82,6 +83,8 @@ namespace MastermindGame
             Counter.Text = remainingTime.ToString();
             attemptHistory.Clear();
             UpdateHistoryView();
+            currentScore = 0;
+            UpdateScoreLabel();
             timer.Start();
         }
 
@@ -108,9 +111,12 @@ namespace MastermindGame
                 return;
             }
 
-            string feedback = EvaluateGuess(guess);
+            string feedback = EvaluateGuess(guess, out int score);
             attemptHistory.Add(string.Join(", ", guess) + " - Feedback: " + feedback);
             UpdateHistoryView();
+
+            currentScore += score;
+            UpdateScoreLabel();
 
             totalAttempts++;
 
@@ -121,11 +127,12 @@ namespace MastermindGame
             }
         }
 
-        private string EvaluateGuess(List<string> guess)
+        private string EvaluateGuess(List<string> guess, out int score)
         {
             var feedbackLabels = new List<Label> { Kleur1, Kleur2, Kleur3, Kleur4 };
             int correctPosition = 0;
             int correctColor = 0;
+            score = 0;
 
             for (int i = 0; i < 4; i++)
             {
@@ -138,6 +145,7 @@ namespace MastermindGame
                 {
                     feedbackLabels[i].BorderBrush = Brushes.DarkRed;
                     correctPosition++;
+                    score += 0; // Geen strafpunten voor correcte positie
                     Geheime_code[i] = null;
                     guess[i] = null;
                 }
@@ -149,7 +157,16 @@ namespace MastermindGame
                 {
                     feedbackLabels[i].BorderBrush = Brushes.Wheat;
                     correctColor++;
+                    score += 1; // 1 strafpunt voor juiste kleur op verkeerde plaats
                     Geheime_code[Geheime_code.IndexOf(guess[i])] = null;
+                }
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (guess[i] != null)
+                {
+                    score += 2; // 2 strafpunten voor een kleur die niet voorkomt
                 }
             }
 
@@ -160,6 +177,11 @@ namespace MastermindGame
         {
             HistoryListBox.ItemsSource = null;
             HistoryListBox.ItemsSource = attemptHistory;
+        }
+
+        private void UpdateScoreLabel()
+        {
+            ScoreLabel.Content = $"Score: {currentScore}";
         }
 
         private void ToggleDebug(object sender, RoutedEventArgs e)

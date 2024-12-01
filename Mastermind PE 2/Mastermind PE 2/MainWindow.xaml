@@ -31,5 +31,9 @@
             <Label Content="poging history:" FontWeight="Medium" />
             <ListBox x:Name="HistoryListBox" Height="70" Width="600" />
         </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="bottom" HorizontalAlignment="Left" Margin="100,200,200,100">
+            <Label Content="Score:" FontWeight="Bold" />
+            <Label x:Name="ScoreLabel" Content="0" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+        </StackPanel>
     </Grid>
 </Window>
